@@ -1,1 +1,1 @@
-web: java -jar -Dserver.port=$PORT target/nuvucard.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.afdev1.nuvucard.NuvucardApplication -Dserver.port=$PORT
