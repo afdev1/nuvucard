@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/all.css">
+    <script defer src="../js/all.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/card.js"></script>
+    <meta charset="UTF-8">
+    <title>Gestor de clientes - nuvucard</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="card card-signin my-5">
+        <div class="card-body">
+            <div class="row">
+                <h1 th:inline="text" class="card-title">¡Bienvenido [[${#httpServletRequest.remoteUser}]]!</h1>
+                <form th:action="@{/logout}" method="post" class="ml-auto mr-3">
+                    <button class="btn btn-danger btn-block btn-circle" type="submit"><i class="fas fa-times"></i>
+                    </button>
+                </form>
+            </div>
+
+
+            <div class="row justify-content-center" style="overflow: auto">
+                <div class="row">
+                    <table class="styled-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Dirección</th>
+                            <th>Ciudad</th>
+                            <th>País</th>
+                            <th>Teléfono</th>
+                            <th>Tarjeta de crédito</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.id}"></td>
+                            <td th:text="${client.username}"></td>
+                            <td th:text="${client.email}"></td>
+                            <td th:text="${client.first_name}"></td>
+                            <td th:text="${client.last_name}"></td>
+                            <td th:text="${client.address}"></td>
+                            <td th:text="${client.city}"></td>
+                            <td th:text="${client.country}"></td>
+                            <td th:text="${client.telephone}"></td>
+                            <td th:text="${T(com.afdev1.nuvucard.controller.HomeController).maskCard(client.card_number)}"></td>
+                            <td>
+                                <!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editorModal">-->
+                                <!--                Editar-->
+                                <!--            </button>-->
+                                <a th:href="@{delete/(id=${client.id})}" class="btn btn-danger btn-circle delBtn"><i
+                                        class="fas fa-trash-alt"></i></a>
+                                <a th:href="@{edit/(id=${client.id})}" class="btn btn-primary btn-circle eBtn"><i
+                                        class="fas fa-user-edit"></i></a>
+                            </td>
+                            <!--        <td>-->
+                            <!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">-->
+                            <!--                X-->
+                            <!--            </button>-->
+                            <!--        </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <br>
+                    <button class="btn btn-success btn-circle nBtn float-right"><i class="fas fa-user-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="formUpdate">
+    <div class="modal fade" id="editorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/update}" method="post" id="editForm">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="username">Usuario</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="first_name">Nombre</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="last_name">Apellido</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="telephone">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telephone" name="telephone" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="city">Ciudad</label>
+                                        <input type="text" class="form-control" id="city" name="city" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="country">País</label>
+                                        <input type="text" class="form-control" id="country" name="country" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div id="card-wrapper"></div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="card_number">Número de tarjeta</label>
+                                    <input type="tel" class="form-control cc-number" id="card_number" name="card_number"
+                                           autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="card_month">Mes</label>
+                                        <input type="number" class="form-control" id="card_month" name="card_month"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_year">Año</label>
+                                        <input type="number" class="form-control" id="card_year" name="card_year"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_security_code">CVV</label>
+                                        <input type="tel" class="form-control" id="card_security_code"
+                                               name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="formCreate">
+    <div class="modal fade" id="creatorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="creatorModalLabel">Crear nuevo cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/save}" method="post" id="clientForm">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="username">Usuario</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="first_name">Nombre</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="last_name">Apellido</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="telephone">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telephone" name="telephone" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="city">Ciudad</label>
+                                        <input type="text" class="form-control" id="city" name="city" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="country">País</label>
+                                        <input type="text" class="form-control" id="country" name="country" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div id="card-wrapper"></div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="card_number">Número de tarjeta</label>
+                                    <input type="tel" class="form-control cc-number" id="card_number" name="card_number"
+                                           autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="card_month">Mes</label>
+                                        <input type="number" class="form-control" id="card_month" name="card_month"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_year">Año</label>
+                                        <input type="number" class="form-control" id="card_year" name="card_year"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_security_code">CVV</label>
+                                        <input type="tel" class="form-control" id="card_security_code"
+                                               name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE5CD;</i>
+                </div>
+                <h4 class="modal-title w-100">Eliminar cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que quiere eliminar este cliente? Este proceso no puede deshacerse.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var card = new Card({
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        form: '#editForm',
+        container: '#card-wrapper', // *required*
+
+        formSelectors: {
+            nameInput: 'input#first-name, input#last-name',
+            numberInput: 'input#card_number',
+            expiryInput: 'input#card_month, input#card_year',
+            cvcInput: 'input#card_security_code'
+        },
+
+        // all of the other options from above
+        placeholders: {
+            number: '**** **** **** ****',
+            name: 'John Doe',
+            expiry: '**/****',
+            cvc: '***'
+        },
+
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        }
+    });
+    var card2 = new Card({
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        form: '#createForm',
+        container: '#card-wrapper2', // *required*
+
+        formSelectors: {
+            nameInput: 'input#first-name2, input#last-name2',
+            numberInput: 'input#card_number2',
+            expiryInput: 'input#card_month2, input#card_year2',
+            cvcInput: 'input#card_security_code2'
+        },
+
+        // all of the other options from above
+        placeholders: {
+            number: '**** **** **** ****',
+            name: 'John Doe',
+            expiry: '**/****',
+            cvc: '***'
+        },
+
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        }
+    });
+</script>
+
+</body>
+</html>
