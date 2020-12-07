@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec537209-d5ae-40b3-a503-3101426d173c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/repository/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/repository/ClientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/afdev1/nuvucard/services/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
-    </list>
+    <list default="true" id="ec537209-d5ae-40b3-a503-3101426d173c" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +98,7 @@
       <workItem from="1607196474851" duration="997000" />
       <workItem from="1607198396236" duration="3699000" />
       <workItem from="1607212390361" duration="1618000" />
-      <workItem from="1607267137960" duration="49351000" />
+      <workItem from="1607267137960" duration="49763000" />
     </task>
     <servers />
   </component>
