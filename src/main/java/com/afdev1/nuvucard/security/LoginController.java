@@ -1,6 +1,6 @@
 package com.afdev1.nuvucard.security;
 
-import com.afdev1.nuvucard.services.AdministratorService;
+import com.afdev1.nuvucard.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,11 +20,16 @@ public class LoginController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    private ClientService clientService;
+
     @RequestMapping("/")
-    public String base(){
+    public String base(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken))
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            model.addAttribute("clients", clientService.loadAll());
             return "/home";
+        }
         return "/login";
     }
 
@@ -42,6 +47,7 @@ public class LoginController {
         } catch (BadCredentialsException e) {
 
         }
+        model.addAttribute("clients", clientService.loadAll());
         return "redirect:/home";
     }
 }

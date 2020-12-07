@@ -3,10 +3,9 @@ $(document).ready(function(){
     $('.nBtn, .eBtn').on('click', function(event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        var text = $(this).text();
-        console.log("TEXTO " + text);
+        var editor = $(this).hasClass("btn-primary");
         //for update user
-        if (text == 'Edit') {
+        if (editor) {
             $.get(href, function (client, status) {
                 $('.formUpdate #id').val(client.id);
                 $('.formUpdate #username').val(client.username);

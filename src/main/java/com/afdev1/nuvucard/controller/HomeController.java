@@ -30,9 +30,9 @@ public class HomeController {
     }
 
     @GetMapping("/edit")
-    //@ResponseBody
-    public void update(Model model, Long id){
-        //return clientService.update(id);
+    @ResponseBody
+    public Optional<Client> update(Model model, Long id){
+        return clientService.update(id);
     }
 
     @GetMapping("/delete")

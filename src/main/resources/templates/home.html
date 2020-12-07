@@ -20,255 +20,286 @@
     <link rel="stylesheet" href="../css/all.css">
     <script defer src="../js/all.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/card.js"></script>
     <meta charset="UTF-8">
     <title>Gestor de clientes - nuvucard</title>
 </head>
-<div>
-<h1 th:inline="text">¡Bienvenido [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Cerrar sesión"/>
-</form>
+<body>
 
-<button class="btn btn-success nBtn"> Nuevo cliente </button>
-<table>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>usuario</th>
-        <th>contraseña</th>
-        <th>correo</th>
-        <th>nombre</th>
-        <th>apellido</th>
-        <th>dirección</th>
-        <th>ciudad</th>
-        <th>país</th>
-        <th>teléfono</th>
-        <th>tarjeta de crédito</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="client : ${clients}">
-        <td th:text="${client.id}"></td>
-        <td th:text="${client.username}"></td>
-        <td th:text="${client.password}"></td>
-        <td th:text="${client.email}"></td>
-        <td th:text="${client.first_name}"></td>
-        <td th:text="${client.last_name}"></td>
-        <td th:text="${client.address}"></td>
-        <td th:text="${client.city}"></td>
-        <td th:text="${client.country}"></td>
-        <td th:text="${client.telephone}"></td>
-        <td th:text="${client.card_number}"></td>
-        <td>
-<!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editorModal">-->
-<!--                Editar-->
-<!--            </button>-->
-            <a th:href="@{delete/(id=${client.id})}" class="btn btn-danger delBtn">Delete</a>
-            <a th:href="@{edit/(id=${client.id})}" class="btn btn-primary eBtn">Edit</a>
-        </td>
-<!--        <td>-->
-<!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">-->
-<!--                X-->
-<!--            </button>-->
-<!--        </td>-->
-    </tr>
-    </tbody>
-</table>
-
-    <div class="formUpdate">
-<div class="modal fade" id="editorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="container">
+    <div class="card card-signin my-5">
+        <div class="card-body">
+            <div class="row">
+                <h1 th:inline="text" class="card-title">¡Bienvenido [[${#httpServletRequest.remoteUser}]]!</h1>
+                <form th:action="@{/logout}" method="post" class="ml-auto mr-3">
+                    <button class="btn btn-danger btn-block btn-circle" type="submit"><i class="fas fa-times"></i>
+                    </button>
+                </form>
             </div>
-            <form th:action="@{/save}" method="post">
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="username">Usuario</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+
+
+            <div class="row justify-content-center" style="overflow: auto">
+                <div class="row">
+                    <table class="styled-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Dirección</th>
+                            <th>Ciudad</th>
+                            <th>País</th>
+                            <th>Teléfono</th>
+                            <th>Tarjeta de crédito</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.id}"></td>
+                            <td th:text="${client.username}"></td>
+                            <td th:text="${client.email}"></td>
+                            <td th:text="${client.first_name}"></td>
+                            <td th:text="${client.last_name}"></td>
+                            <td th:text="${client.address}"></td>
+                            <td th:text="${client.city}"></td>
+                            <td th:text="${client.country}"></td>
+                            <td th:text="${client.telephone}"></td>
+                            <td th:text="${client.card_number}"></td>
+                            <td>
+                                <!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editorModal">-->
+                                <!--                Editar-->
+                                <!--            </button>-->
+                                <a th:href="@{delete/(id=${client.id})}" class="btn btn-danger btn-circle delBtn"><i
+                                        class="fas fa-trash-alt"></i></a>
+                                <a th:href="@{edit/(id=${client.id})}" class="btn btn-primary btn-circle eBtn"><i
+                                        class="fas fa-user-edit"></i></a>
+                            </td>
+                            <!--        <td>-->
+                            <!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">-->
+                            <!--                X-->
+                            <!--            </button>-->
+                            <!--        </td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <br>
+                    <button class="btn btn-success btn-circle nBtn float-right"><i class="fas fa-user-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="formUpdate">
+    <div class="modal fade" id="editorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/save}" method="post">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="username">Usuario</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               required>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="password">Contraseña</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="form-group">
+                                    <label for="email">Correo</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="firstName">Nombre</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="lastName">Apellido</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="telephone">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telephone" name="telephone" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="city">Ciudad</label>
+                                        <input type="text" class="form-control" id="city" name="city" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="country">País</label>
+                                        <input type="text" class="form-control" id="country" name="country" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Correo</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="firstName">Nombre</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="lastName">Apellido</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="address">Dirección</label>
-                                    <input type="text" class="form-control" id="address" name="address" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="telephone">Teléfono</label>
-                                    <input type="tel" class="form-control" id="telephone" name="telephone" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="city">Ciudad</label>
-                                    <input type="text" class="form-control" id="city" name="city" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="country">País</label>
-                                    <input type="text" class="form-control" id="country" name="country" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="form-group">
-                                <label for="cc-number">Número de tarjeta</label>
-                                <input type="tel" class="form-control cc-number" id="card_number" name="card_number" autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
-                                <div class="">
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label for="cc-number">Número de tarjeta</label>
+                                    <input type="tel" class="form-control cc-number" id="card_number" name="card_number"
+                                           autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
+                                    <div class="">
                                     <span class="input-group-text bg-transparent">
                                         <i class="fab fa-cc-visa form-control-feedback"></i>
                                         <i class="fab fa-cc-amex form-control-feedback"></i>
                                         <i class="fab fa-cc-mastercard  form-control-feedback"></i>
                                     </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="month">Mes</label>
-                                    <input type="number" class="form-control" id="card_month" name="card_month" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="year">Año</label>
-                                    <input type="number" class="form-control" id="card_year" name="card_year" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="cvv">CVV</label>
-                                    <input type="tel" class="form-control" id="card_security_code" name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="month">Mes</label>
+                                        <input type="number" class="form-control" id="card_month" name="card_month"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="year">Año</label>
+                                        <input type="number" class="form-control" id="card_year" name="card_year"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="cvv">CVV</label>
+                                        <input type="tel" class="form-control" id="card_security_code"
+                                               name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="formCreate">
-<div class="modal fade" id="creatorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="creatorModalLabel">Crear nuevo cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form th:action="@{/save}" method="post">
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="username">Usuario</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+    <div class="modal fade" id="creatorModal" tabindex="-1" aria-labelledby="editorModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="creatorModalLabel">Crear nuevo cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/save}" method="post" id="clientForm">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="username">Usuario</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               required>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="password">Contraseña</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="form-group">
+                                    <label for="email">Correo</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Correo</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="firstName">Nombre</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="first_name">Nombre</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="last_name">Apellido</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                               required>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="lastName">Apellido</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="telephone">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telephone" name="telephone" required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="address">Dirección</label>
-                                    <input type="text" class="form-control" id="address" name="address" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="telephone">Teléfono</label>
-                                    <input type="tel" class="form-control" id="telephone" name="telephone" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="city">Ciudad</label>
-                                    <input type="text" class="form-control" id="city" name="city" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="country">País</label>
-                                    <input type="text" class="form-control" id="country" name="country" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="form-group">
-                                <label for="cc-number">Número de tarjeta</label>
-                                <input type="tel" class="form-control cc-number" id="card_number" name="card_number" autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
-                                <div class="">
-                                    <span class="input-group-text bg-transparent">
-                                        <i class="fab fa-cc-visa form-control-feedback"></i>
-                                        <i class="fab fa-cc-amex form-control-feedback"></i>
-                                        <i class="fab fa-cc-mastercard  form-control-feedback"></i>
-                                    </span>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="city">Ciudad</label>
+                                        <input type="text" class="form-control" id="city" name="city" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="country">País</label>
+                                        <input type="text" class="form-control" id="country" name="country" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="month">Mes</label>
-                                    <input type="number" class="form-control" id="card_month" name="card_month" required>
+                            <div class="form-group col-md-6">
+                                <div class="card-wrapper"></div>
+                                <br>
+                                <div class="form-group">
+                                    <label for="card_number">Número de tarjeta</label>
+                                    <input type="tel" class="form-control cc-number" id="card_number" name="card_number"
+                                           autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="year">Año</label>
-                                    <input type="number" class="form-control" id="card_year" name="card_year" required>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="cvv">CVV</label>
-                                    <input type="tel" class="form-control" id="card_security_code" name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="card_month">Mes</label>
+                                        <input type="number" class="form-control" id="card_month" name="card_month"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_year">Año</label>
+                                        <input type="number" class="form-control" id="card_year" name="card_year"
+                                               required>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="card_security_code">CVV</label>
+                                        <input type="tel" class="form-control" id="card_security_code"
+                                               name="card_security_code" autocomplete="off" placeholder="••••" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
-                    <button type="submit" class="btn btn-primary">Crear</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
@@ -292,6 +323,35 @@
     </div>
 </div>
 
+<script>
+    console.log("Prev");
+    var card = new Card({
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        form: '#clientForm',
+        container: '.card-wrapper', // *required*
+
+        formSelectors: {
+            nameInput: 'input#first-name, input#last-name',
+            numberInput: 'input#card_number',
+            expiryInput: 'input#card_month, input#card_year',
+            cvcInput: 'input#card_security_code'
+        },
+
+        // all of the other options from above
+        placeholders: {
+            number: '**** **** **** ****',
+            name: 'John Doe',
+            expiry: '**/****',
+            cvc: '***'
+        },
+
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        }
+    });
+    console.log('cargado');
+</script>
 
 </body>
 </html>
