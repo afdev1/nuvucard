@@ -24,14 +24,13 @@ public class LoginController {
     public String base(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken))
-            return "home";
-        return "login";
+            return "/home";
+        return "/login";
     }
-
 
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "/login";
     }
 
     @PostMapping("/login")
@@ -43,6 +42,6 @@ public class LoginController {
         } catch (BadCredentialsException e) {
 
         }
-        return "redirect:home";
+        return "redirect:/home";
     }
 }
