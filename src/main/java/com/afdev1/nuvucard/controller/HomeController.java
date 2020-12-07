@@ -31,13 +31,24 @@ public class HomeController {
 
     @GetMapping("/edit")
     @ResponseBody
-    public Optional<Client> update(Model model, Long id){
+    public Optional<Client> edit(Long id){
         return clientService.update(id);
+    }
+
+    @PostMapping("/update")
+    public String update(Client client){
+        clientService.update(client);
+        return "redirect:/home";
     }
 
     @GetMapping("/delete")
     public String delete(Long id){
         clientService.delete(id);
         return "redirect:/home";
+    }
+
+    public static String maskCard(Long card) {
+        String card_number = card.toString();
+        return "•••• " + card_number.subSequence(card_number.length()-4, card_number.length()).toString();
     }
 }

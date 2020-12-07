@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
             integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -67,7 +66,7 @@
                             <td th:text="${client.city}"></td>
                             <td th:text="${client.country}"></td>
                             <td th:text="${client.telephone}"></td>
-                            <td th:text="${client.card_number}"></td>
+                            <td th:text="${T(com.afdev1.nuvucard.controller.HomeController).maskCard(client.card_number)}"></td>
                             <td>
                                 <!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editorModal">-->
                                 <!--                Editar-->
@@ -107,7 +106,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form th:action="@{/save}" method="post">
+                <form th:action="@{/update}" method="post" id="editForm">
                     <div class="modal-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -128,12 +127,12 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="firstName">Nombre</label>
+                                        <label for="first_name">Nombre</label>
                                         <input type="text" class="form-control" id="first_name" name="first_name"
                                                required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="lastName">Apellido</label>
+                                        <label for="last_name">Apellido</label>
                                         <input type="text" class="form-control" id="last_name" name="last_name"
                                                required>
                                     </div>
@@ -160,31 +159,26 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
+                                <div id="card-wrapper"></div>
+                                <br>
                                 <div class="form-group">
-                                    <label for="cc-number">Número de tarjeta</label>
+                                    <label for="card_number">Número de tarjeta</label>
                                     <input type="tel" class="form-control cc-number" id="card_number" name="card_number"
                                            autocomplete="card_number" placeholder="•••• •••• •••• ••••" required>
-                                    <div class="">
-                                    <span class="input-group-text bg-transparent">
-                                        <i class="fab fa-cc-visa form-control-feedback"></i>
-                                        <i class="fab fa-cc-amex form-control-feedback"></i>
-                                        <i class="fab fa-cc-mastercard  form-control-feedback"></i>
-                                    </span>
-                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label for="month">Mes</label>
+                                        <label for="card_month">Mes</label>
                                         <input type="number" class="form-control" id="card_month" name="card_month"
                                                required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="year">Año</label>
+                                        <label for="card_year">Año</label>
                                         <input type="number" class="form-control" id="card_year" name="card_year"
                                                required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="cvv">CVV</label>
+                                        <label for="card_security_code">CVV</label>
                                         <input type="tel" class="form-control" id="card_security_code"
                                                name="card_security_code" autocomplete="off" placeholder="••••" required>
                                     </div>
@@ -265,7 +259,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <div class="card-wrapper"></div>
+                                <div id="card-wrapper"></div>
                                 <br>
                                 <div class="form-group">
                                     <label for="card_number">Número de tarjeta</label>
@@ -324,12 +318,11 @@
 </div>
 
 <script>
-    console.log("Prev");
     var card = new Card({
         // a selector or DOM element for the container
         // where you want the card to appear
-        form: '#clientForm',
-        container: '.card-wrapper', // *required*
+        form: '#editForm',
+        container: '#card-wrapper', // *required*
 
         formSelectors: {
             nameInput: 'input#first-name, input#last-name',
@@ -350,7 +343,31 @@
             cardNumber: '•' // optional - mask card number
         }
     });
-    console.log('cargado');
+    var card2 = new Card({
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        form: '#createForm',
+        container: '#card-wrapper2', // *required*
+
+        formSelectors: {
+            nameInput: 'input#first-name2, input#last-name2',
+            numberInput: 'input#card_number2',
+            expiryInput: 'input#card_month2, input#card_year2',
+            cvcInput: 'input#card_security_code2'
+        },
+
+        // all of the other options from above
+        placeholders: {
+            number: '**** **** **** ****',
+            name: 'John Doe',
+            expiry: '**/****',
+            cvc: '***'
+        },
+
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        }
+    });
 </script>
 
 </body>
