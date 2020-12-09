@@ -8,5 +8,14 @@
       <jdbc-url>jdbc:postgresql://ec2-3-95-124-37.compute-1.amazonaws.com:5432/d5qarcnlf6p9g1</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="nuvucard/Hibernate" uuid="bcc04092-f901-4ad6-8fbf-c3a27ec58f15">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-3-95-124-37.compute-1.amazonaws.com:5432/d5qarcnlf6p9g1</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

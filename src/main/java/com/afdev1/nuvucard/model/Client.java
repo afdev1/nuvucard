@@ -165,14 +165,14 @@ public class Client {
         return "Client{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                ", email='" + email + '\'' +
-//                ", first_name='" + first_name + '\'' +
-//                ", last_name='" + last_name + '\'' +
-//                ", address='" + address + '\'' +
-//                ", city='" + city + '\'' +
-//                ", country='" + country + '\'' +
-//                ", telephone=" + telephone +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", telephone=" + telephone +
                 '}';
     }
 }

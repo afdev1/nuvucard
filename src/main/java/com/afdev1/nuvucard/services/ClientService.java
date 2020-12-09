@@ -31,7 +31,11 @@ public class ClientService{
     }
 
     public void update(Client client) {
-        clientRepository.updateClient(client.getId(), client.getUsername(), client.getPassword(),
+        System.out.println(client);
+        clientRepository.updateClient(
+                client.getId(),
+                client.getUsername(),
+                client.getPassword(),
                 client.getEmail(), client.getFirst_name(), client.getLast_name(), client.getAddress(),
                 client.getCity(), client.getCountry(), client.getTelephone(), client.getCard_number(),
                 client.getCard_month(), client.getCard_year(), client.getCard_security_code());
